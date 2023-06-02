@@ -8,6 +8,8 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  ParseFilePipe,
+  MaxFileSizeValidator,
 } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { CreateFileDto } from './dto/create-file.dto';
@@ -20,6 +22,11 @@ import { fileStorage } from './storage';
 @ApiTags('files')
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
+
+  @Get()
+  findAll() {
+    return this.filesService.findAll();
+  }
 
   @Post()
   @UseInterceptors(
@@ -39,8 +46,15 @@ export class FilesController {
       },
     },
   })
-  create(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
+  create(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 5 })],
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    // console.log(file);
     return file;
   }
 }
