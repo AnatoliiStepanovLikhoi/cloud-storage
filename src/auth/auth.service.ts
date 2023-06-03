@@ -3,10 +3,10 @@ import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UsersService) {}
+  constructor(private usersService: UsersService) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.userService.findByEmail(email);
+    const user = await this.usersService.findByEmail(email);
 
     if (user && user.password === password) {
       const { password, ...result } = user;
