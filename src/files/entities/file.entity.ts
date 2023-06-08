@@ -33,5 +33,5 @@ export class FileEntity {
   user: UserEntity;
 
   @DeleteDateColumn()
-  deleteAt?: Date;
+  deletedat?: Date;
 }

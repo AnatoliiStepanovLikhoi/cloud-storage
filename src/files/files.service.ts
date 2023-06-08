@@ -22,7 +22,7 @@ export class FilesService {
     }
 
     if (fileType === FileType.TRASH) {
-      qb.withDeleted().andWhere('file.deletedAt IS NOT NULL');
+      qb.withDeleted().andWhere('file.deletedat IS NOT NULL');
     }
 
     return qb.getMany();
